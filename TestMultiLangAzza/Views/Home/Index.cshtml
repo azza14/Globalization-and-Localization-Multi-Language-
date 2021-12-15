@@ -1,0 +1,107 @@
+﻿ @*@using TestMultiLangAzza.Resources*@
+@model TestMultiLangAzza.Models.Person
+@{
+
+    ViewBag.Title = TestMultiLangAzza.Resources.Resources.AddPerson;
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+@helper selected(string c, string culture)
+{
+    if (c == culture)
+    {
+        @:checked="checked"
+    }
+}
+@using (Html.BeginForm("SetCulture", "Home"))
+{
+    <fieldset>
+        <legend>@TestMultiLangAzza.Resources.Resources.ChooseYourLanguage</legend>
+
+        <div class="control-group">
+            <div class="controls">
+                <label for="en-us">
+                    <input name="culture" id="en-us" value="en-us" type="radio" @selected("en-us", culture) /> English
+                </label>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <label for="ar">
+                    <input name="culture" id="ar" value="ar" type="radio" @selected("ar", culture) /> العربية
+                </label>
+            </div>
+        </div>
+
+
+    </fieldset>
+
+
+
+
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Person</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Age, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Biography, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Biography, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Biography, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="@TestMultiLangAzza.Resources.Resources.Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        (function ($) {
+            $("input[type = 'radio']").click(function () {
+                $(this).parents("form").submit(); // post form
+            });
+
+        })(jQuery);
+    </script>
+}
